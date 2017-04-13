@@ -126,10 +126,10 @@ resource "openstack_compute_instance_v2" "terraform" {
 
 ######## MESOS SERVERS ########
 resource "openstack_compute_instance_v2" "node" {
-  count = "${var.elastic}"
+  count = "${var.nodes}"
   name            = "node-${count.index}"
   image_name      = "${var.image}"
-  flavor_name     = "${var.flavor}"
+  flavor_name     = "${var.slaveflavor}"
   key_pair        = "${openstack_compute_keypair_v2.terraform.name}"
   user_data       = "#cloud-config\n\nssh_authorized_keys:\n  - \"${file("${var.ssh_key_file}")}\"\n"
   security_groups = ["${openstack_compute_secgroup_v2.terraform.name}"]
