@@ -1,0 +1,13 @@
+site_name: Mesos DcOS deploy with terraform
+site_url: http://www.redbeard-consulting.fr
+repo_url: https://github.com/redbeard28/mesos-dcos
+site_description: Build an OpenStack env Mesos DcOS tests.
+site_author: Jeremie CUADRADO aka redbeard28
+
+theme: readthedocs
+pages:
+  - [ 'index.md', 'Home' ]
+  - [ 'prequisits.md', 'Home', 'Prequisits' ]
+  - [ 'tested_os.md', 'Home', 'Tested for' ]
+  - [ 'license.md', 'About', 'License' ]
+  - [ 'about.md', 'About', 'about.md' ]
