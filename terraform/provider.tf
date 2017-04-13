@@ -31,7 +31,7 @@ resource "openstack_networking_network_v2" "terraform" {
 resource "openstack_networking_subnet_v2" "terraform" {
   name            = "terraform"
   network_id      = "${openstack_networking_network_v2.terraform.id}"
-  cidr            = "192.168.199.0/24"
+  cidr            = "192.168.200.0/24"
   ip_version      = 4
   dns_nameservers = ["8.8.8.8", "8.8.4.4"]
 }
@@ -80,15 +80,11 @@ resource "openstack_compute_secgroup_v2" "terraform" {
   }
 }
 
-resource "openstack_compute_floatingip_v2" "bastion_ip" {
+resource "openstack_compute_floatingip_v2" "mesosmaster_ip" {
   pool       = "${var.pool}"
   depends_on = ["openstack_networking_router_interface_v2.terraform"]
 }
 
-resource "openstack_compute_floatingip_v2" "webserv_ip" {
-  pool       = "${var.pool}"
-  depends_on = ["openstack_networking_router_interface_v2.terraform"]
-}
 
 resource "openstack_compute_instance_v2" "terraform" {
   name            = "terraform"
@@ -96,7 +92,7 @@ resource "openstack_compute_instance_v2" "terraform" {
   flavor_name     = "${var.flavor}"
   key_pair        = "${openstack_compute_keypair_v2.terraform.name}"
   security_groups = ["${openstack_compute_secgroup_v2.terraform.name}"]
-  floating_ip     = "${openstack_compute_floatingip_v2.bastion_ip.address}"
+  floating_ip     = "${openstack_compute_floatingip_v2.mesosmaster_ip.address}"
   user_data        = "${file("${var.user_data_path}")}"
   network {
     uuid = "${openstack_networking_network_v2.terraform.id}"
